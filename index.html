@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Watchlist App</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="header">
+        <h1>Find your film</h1>
+        <a href="#">My Watchlist</a>
+    </div>
+
+    <form action="submit" class="search-box" id="search-box">
+        <i class="fa fa-search icon"></i>
+        <input type="text" name="search-movie" id="search-movie" placeholder="Blade Runner">
+        <button class="btn search-movie-btn" id="search-movie-btn">Search</button>
+    </form>
+
+    <div class="main" id="main"></div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
