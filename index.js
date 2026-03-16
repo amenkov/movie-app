@@ -1,12 +1,33 @@
 const searchForm = document.getElementById('search-box')
-let searchUrl = 'http://www.omdbapi.com/?i=tt3896198&apikey=48cbe039&'
+const searchUrl = 'http://www.omdbapi.com/?i=tt3896198&apikey=48cbe039&'
+const localStorageKey = "movie-watchlist-app"
+
 let moviesIds = []
+let savedWatchlist = []
 
 document.addEventListener('submit', function (e) {
     e.preventDefault()
 
     const formData = new FormData(searchForm)
-    getMoviesByTitle(formData.get('search-movie'))
+    //getMoviesByTitle(formData.get('search-movie'))
+
+})
+
+document.addEventListener('click', (e) => {
+    if (!e.target.classList.contains("add-btn")) {
+        return
+    }
+    const imdbId = e.target.dataset.imdbId
+
+    if (!savedWatchlist.includes(imdbId)) {
+        savedWatchlist.push(imdbId)
+        localStorage.setItem(localStorageKey, JSON.stringify(imdbId))
+        e.target.innerHTML = `<i class="fa-solid fa-circle-minus"></i>Remove from watchlist`
+    } else {
+        localStorage.removeItem(localStorageKey, JSON.stringify(imdbId))
+        e.target.innerHTML = `<i class="fa-solid fa-circle-plus"></i>Watchlist`
+
+    }
 
 })
 
@@ -14,9 +35,6 @@ async function getMoviesByTitle(movieTitle) {
     const movieSearchUrl = `${searchUrl}s=${movieTitle}`
     const res = await fetch(movieSearchUrl)
     const data = await res.json()
-
-    console.log(data.Response)
-
     const totalPages = Math.ceil((Number(data.totalResults) / 10))
 
     if (!totalPages) {
@@ -29,8 +47,6 @@ async function getMoviesByTitle(movieTitle) {
 
 async function getMoviesIds(searchUrl, totalPages, movieTitle) {
     console.log("TotalPages: ", totalPages)
-
-    // let innerHtml = ''
 
     for (let i = 1; i < totalPages; i++) {
         let searchUrlPaged = `${searchUrl}s=${movieTitle}&page=${i}`
@@ -78,7 +94,7 @@ async function renderMovies(moviesIdsList) {
         `
     }
 
-    document.getElementById('main').innerHTML= innerHtml
+    document.getElementById('main').innerHTML = innerHtml
 
 }
 

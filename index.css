@@ -40,7 +40,7 @@ a {
     display: flex;
     margin: 0 auto;
     height: 200px;
-    width: 550px;
+    width: 90%;
     background-size: cover;
     padding: 0 2.62em;
     justify-content: space-between;
@@ -52,7 +52,8 @@ a {
 
 .search-box {
     position: absolute;
-    width: 462px;
+    width: 80%;
+    max-width: 640px;
     display: flex;
     margin: 0 auto;
     position: relative;
@@ -67,7 +68,8 @@ a {
     pointer-events: none;
 }
 
-.fa-circle-plus {
+.fa-circle-plus,
+.fa-circle-minus {
     margin-right: 1em;
 }
 
@@ -105,6 +107,17 @@ button#search-movie-btn {
     box-sizing: border-box;
     background: #4B4B4B;
     border-radius: 0 5px 5px 0;
+}
+
+.btn {
+    background: none;
+    outline: none;
+    border: none;
+    font-family: "Inter", sans-serif;
+    color:#FFFFFF;
+    cursor: pointer;
+    box-sizing: border-box;
+    font-size: 1;
 }
 
 .main {
