@@ -1,32 +1,90 @@
 const searchForm = document.getElementById('search-box')
+let searchUrl = 'http://www.omdbapi.com/?i=tt3896198&apikey=48cbe039&'
+let moviesIds = []
 
 document.addEventListener('submit', function (e) {
     e.preventDefault()
 
     const formData = new FormData(searchForm)
-    console.log(formData.get('search-movie'))
-
-    getMovies(formData.get('search-movie'))
+    getMoviesByTitle(formData.get('search-movie'))
 
 })
 
-async function getMovies(movieTitle) {
-    const res = await fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=48cbe039&s=${movieTitle}`)
+async function getMoviesByTitle(movieTitle) {
+    const movieSearchUrl = `${searchUrl}s=${movieTitle}`
+    const res = await fetch(movieSearchUrl)
     const data = await res.json()
 
-    console.log(data)
-    renderMovies(data)
-}
+    console.log(data.Response)
 
-function renderMovies(data) {
+    const totalPages = Math.ceil((Number(data.totalResults) / 10))
 
-    if (!data) {
+    if (!totalPages) {
+        console.log("Error getting total pages", data)
         return
     }
 
-    
+    getMoviesIds(searchUrl, totalPages, movieTitle)
+}
+
+async function getMoviesIds(searchUrl, totalPages, movieTitle) {
+    console.log("TotalPages: ", totalPages)
+
+    // let innerHtml = ''
+
+    for (let i = 1; i < totalPages; i++) {
+        let searchUrlPaged = `${searchUrl}s=${movieTitle}&page=${i}`
+        const res = await fetch(searchUrlPaged)
+        const data = await res.json()
+        console.log(data)
+
+        if (data.Response === "False") {
+            return
+        }
+
+        for (movie of data.Search) {
+            moviesIds.push(movie.imdbID)
+        }
+    }
+
+    renderMovies(moviesIds)
+}
+
+async function renderMovies(moviesIdsList) {
+
+    let innerHTML = ''
+
+    for (id of moviesIdsList) {
+        let dirSearchUrl = `${searchUrl}i=${id}`
+
+        const res = await fetch(dirSearchUrl)
+        const movieData = await res.json()
+
+        innerHTML += `
+         <div class="movie-card">
+             <img class="poster"
+                 src="${movieData.Poster}">
+             <div class="movie-info">
+                 <h3 class="movie-title">${movie.Title}<span class="rating"><i class="fa-solid fa-star"></i>${movie.imdbRating}</span></h3>
+                 <div class="movie-details">
+                     <p>${movieData.Runtime}</p>
+                     <p>${movieData.Genre}</p>
+                     <a href="#"><i class="fa-solid fa-circle-plus"></i>Watchlist</a>
+                 </div>
+                 <p class="plot">${movieData.Plot}</p>
+             </div>
+         </div>
+         <hr>
+        `
+    }
+
+    document.getElementById('main').innerHTML= innerHtml
 
 }
+
+
+// {Response: 'False', Error: 'Too many results.'}
+
 
 // {
 //     "Title": "Blade Runner",
