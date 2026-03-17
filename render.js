@@ -22,7 +22,7 @@ export async function renderMovies(moviesIdsList, savedWatchList) {
         innerHTML += `
          <div class="movie-card">
              <img class="poster"
-                 src="${movieData.Poster}">
+                 src="${movieData.Poster}" onerror="this.src='./images/filmstrip.png';this.onerror='';">
              <div class="movie-info">
                  <h3 class="movie-title">${movieData.Title}<span class="rating"><i class="fa-solid fa-star"></i>${movieData.imdbRating}</span></h3>
                  <div class="movie-details">

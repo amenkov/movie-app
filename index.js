@@ -61,7 +61,8 @@ async function getMoviesByTitle(movieTitle) {
 async function getMoviesIds(searchUrl, totalPages, movieTitle) {
     console.log("TotalPages: ", totalPages)
 
-    for (let i = 1; i <= totalPages; i++) {
+    for (let i = 0; i < totalPages; i++) {
+        i++
         let searchUrlPaged = `${searchUrl}s=${movieTitle}&page=${i}`
         const res = await fetch(searchUrlPaged)
         const data = await res.json()
@@ -75,6 +76,8 @@ async function getMoviesIds(searchUrl, totalPages, movieTitle) {
             moviesIds.push(movie.imdbID)
         }
     }
+
+    document.getElementById('placeholder').remove()
 
     renderMovies(moviesIds, savedWatchList)
 }

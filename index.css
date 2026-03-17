@@ -13,7 +13,8 @@ body,
 a,
 input#search-movie,
 button#search-movie-btn,
-.fa-magnifying-glass, .fa-circle-plus {
+.fa-magnifying-glass,
+.fa-circle-plus {
     color: #FFFFFF;
 }
 
@@ -123,7 +124,7 @@ button#search-movie-btn {
     outline: none;
     border: none;
     font-family: "Inter", sans-serif;
-    color:#FFFFFF;
+    color: #FFFFFF;
     cursor: pointer;
     box-sizing: border-box;
     /* font-size: 1rem; */
@@ -155,8 +156,8 @@ button#search-movie-btn {
 }
 
 .poster {
-  width: 120px;
-  height: auto;
+    width: 120px;
+    height: auto;
 }
 
 hr {
@@ -164,9 +165,41 @@ hr {
     background-color: #333;
     border: none;
     /* width: 90%; */
-    margin:1em 0; 
+    margin: 1em 0;
 }
 
 .search-list {
-    margin-top: 2em;
+    margin-top: 1em;
+}
+
+.placeholder {
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    margin: 0 auto;
+    color: #A5A5A5;
+
+}
+
+.placeholder-icon {
+    padding: 0;
+    font-size: 10rem;
+    color: #333;
+
+}
+
+.placeholder p {
+    color: #333;
+}
+
+.watchlist-placeholder {
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+    margin: 0 auto;
+    color: #333;
 }
