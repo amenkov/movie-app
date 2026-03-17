@@ -37,7 +37,7 @@ document.addEventListener('click', (e) => {
         localStorage.setItem(localStorageKey, JSON.stringify(savedWatchList))
         e.target.innerHTML = getBtnText(savedWatchList, imdbId)
     } else {
-        savedWatchList = savedWatchList.filter(item => imdbId !== imdbId)
+        savedWatchList = savedWatchList.filter(item => item !== imdbId)
         localStorage.setItem(localStorageKey, JSON.stringify(savedWatchList))
         e.target.innerHTML = getBtnText(savedWatchList, imdbId)
     }

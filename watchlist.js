@@ -11,6 +11,18 @@ if (savedWatchlistStorageObj) {
     savedWatchList = []
 }
 
+togglePlaceholder(savedWatchList)
+
+function togglePlaceholder(watchList) {
+    if (savedWatchList.length > 0) {
+        document.getElementById('watchlist-placeholder').classList.add('hidden')
+
+    } else {
+        document.getElementById('watchlist-placeholder').classList.remove('hidden')
+
+    }
+}
+
 renderMovies(savedWatchList)
 
 async function renderMovies(savedWatchList) {
@@ -47,9 +59,9 @@ async function renderMovies(savedWatchList) {
          </div>
          <hr>
         `
-        if (document.getElementById('watchlist-placeholder')) {
-            document.getElementById('watchlist-placeholder').remove()
-        }
+        // if (document.getElementById('watchlist-placeholder')) {
+        //     document.getElementById('watchlist-placeholder').remove()
+        // }
         document.getElementById('main').innerHTML = innerHTML
     }
 
@@ -61,10 +73,11 @@ document.addEventListener('click', (e) => {
     }
     const imdbId = e.target.dataset.imdbId
 
-    savedWatchList = savedWatchList.filter(item => imdbId !== imdbId)
+    savedWatchList = savedWatchList.filter(item => item !== imdbId)
     localStorage.setItem(localStorageKey, JSON.stringify(savedWatchList))
 
     document.getElementById(imdbId).remove()
     document.getElementsByTagName('hr')[0].remove()
+    togglePlaceholder(savedWatchList)
 
 })
