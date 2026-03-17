@@ -6,6 +6,7 @@ body {
     margin: 0;
     background: #121212;
     font-family: "Inter", sans-serif;
+    min-width: 780px;
 }
 
 body,
@@ -53,7 +54,7 @@ a {
 .search-box {
     position: absolute;
     width: 80%;
-    max-width: 640px;
+    max-width: 625px;
     display: flex;
     margin: 0 auto;
     position: relative;
@@ -129,15 +130,15 @@ button#search-movie-btn {
 }
 
 .main {
-    display: grid;
+    width: 90%;
+    margin: 0 auto;
 }
 
 .movie-card {
-    width: 80%;
     display: flex;
     align-items: center;
-    /* justify-content: space-evenly; */
-    margin: 0 auto;
+    justify-content: flex-start;
+    gap: 1em;
     padding: 0 2em;
 }
 
@@ -147,9 +148,10 @@ button#search-movie-btn {
 
 .movie-details {
     display: flex;
-    /* padding: 0 2em 0 0; */
-    justify-content: space-between;
+}
 
+.movie-details p {
+    margin-right: 2em;
 }
 
 .poster {
@@ -161,6 +163,10 @@ hr {
     height: 1px;
     background-color: #333;
     border: none;
-    width: 90%;
-    margin:1em auto; 
+    /* width: 90%; */
+    margin:1em 0; 
+}
+
+.search-list {
+    margin-top: 2em;
 }
