@@ -1,15 +1,27 @@
+import { searchUrl } from "./modules.js"
+import { localStorageKey } from "./modules.js"
+import { getBtnText } from "./modules.js"
+
 const searchForm = document.getElementById('search-box')
-const searchUrl = 'http://www.omdbapi.com/?i=tt3896198&apikey=48cbe039&'
-const localStorageKey = "movie-watchlist-app"
+
 
 let moviesIds = []
-let savedWatchlist = []
+let savedWatchlistStorageObj = localStorage.getItem(localStorageKey)
+let savedWatchList
+
+if (savedWatchlistStorageObj) {
+    savedWatchList = JSON.parse(savedWatchlistStorageObj)
+} else {
+    savedWatchList = []
+}
+
+
 
 document.addEventListener('submit', function (e) {
     e.preventDefault()
 
     const formData = new FormData(searchForm)
-    //getMoviesByTitle(formData.get('search-movie'))
+    getMoviesByTitle(formData.get('search-movie'))
 
 })
 
@@ -19,14 +31,14 @@ document.addEventListener('click', (e) => {
     }
     const imdbId = e.target.dataset.imdbId
 
-    if (!savedWatchlist.includes(imdbId)) {
-        savedWatchlist.push(imdbId)
-        localStorage.setItem(localStorageKey, JSON.stringify(imdbId))
-        e.target.innerHTML = `<i class="fa-solid fa-circle-minus"></i>Remove from watchlist`
+    if (!savedWatchList.includes(imdbId)) {
+        savedWatchList.push(imdbId)
+        localStorage.setItem(localStorageKey, JSON.stringify(savedWatchList))
+        e.target.innerHTML = getBtnText(savedWatchList, imdbId)
     } else {
-        localStorage.removeItem(localStorageKey, JSON.stringify(imdbId))
-        e.target.innerHTML = `<i class="fa-solid fa-circle-plus"></i>Watchlist`
-
+        savedWatchList = savedWatchList.filter(item => imdbId !== imdbId)
+        localStorage.setItem(localStorageKey, JSON.stringify(savedWatchList))
+        e.target.innerHTML = getBtnText(savedWatchList, imdbId)
     }
 
 })
@@ -58,7 +70,7 @@ async function getMoviesIds(searchUrl, totalPages, movieTitle) {
             return
         }
 
-        for (movie of data.Search) {
+        for (let movie of data.Search) {
             moviesIds.push(movie.imdbID)
         }
     }
@@ -70,22 +82,30 @@ async function renderMovies(moviesIdsList) {
 
     let innerHTML = ''
 
-    for (id of moviesIdsList) {
+    for (let id of moviesIdsList) {
         let dirSearchUrl = `${searchUrl}i=${id}`
+        
 
         const res = await fetch(dirSearchUrl)
         const movieData = await res.json()
+
+        if (movieData.Response === "False") {
+            console.log(movieData)
+            return
+        }
+
+        const btnText = getBtnText(savedWatchList, movieData.imdbID)
 
         innerHTML += `
          <div class="movie-card">
              <img class="poster"
                  src="${movieData.Poster}">
              <div class="movie-info">
-                 <h3 class="movie-title">${movie.Title}<span class="rating"><i class="fa-solid fa-star"></i>${movie.imdbRating}</span></h3>
+                 <h3 class="movie-title">${movieData.Title}<span class="rating"><i class="fa-solid fa-star"></i>${movieData.imdbRating}</span></h3>
                  <div class="movie-details">
                      <p>${movieData.Runtime}</p>
                      <p>${movieData.Genre}</p>
-                     <a href="#"><i class="fa-solid fa-circle-plus"></i>Watchlist</a>
+                     <button class="btn add-btn" data-imdb-id="${movieData.imdbID}">${btnText}</button>
                  </div>
                  <p class="plot">${movieData.Plot}</p>
              </div>
@@ -94,7 +114,7 @@ async function renderMovies(moviesIdsList) {
         `
     }
 
-    document.getElementById('main').innerHTML = innerHtml
+    document.getElementById('main').innerHTML = innerHTML
 
 }
 

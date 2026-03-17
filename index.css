@@ -73,6 +73,14 @@ a {
     margin-right: 1em;
 }
 
+.fa-circle-plus {
+    color: greenyellow;
+}
+
+.fa-circle-minus {
+    color: red;
+}
+
 .fa-star {
     color: gold;
     margin: 0 1em;
