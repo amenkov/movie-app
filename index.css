@@ -119,6 +119,10 @@ button#search-movie-btn {
     border-radius: 0 5px 5px 0;
 }
 
+button#search-movie-btn:hover {
+    background: #444;
+}
+
 .btn {
     background: none;
     outline: none;
@@ -193,6 +197,10 @@ hr {
 
 .placeholder p {
     color: #333;
+}
+
+.placeholder h3 {
+    color: #787878;
 }
 
 .watchlist-placeholder {
