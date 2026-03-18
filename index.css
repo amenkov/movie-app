@@ -140,7 +140,8 @@ button#search-movie-btn {
     align-items: center;
     justify-content: flex-start;
     gap: 1em;
-    padding: 0 2em;
+    padding: 1em 2em;
+    border-bottom: 1px solid #333;
 }
 
 .movie-info {

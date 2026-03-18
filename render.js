@@ -33,7 +33,6 @@ export async function renderMovies(moviesIdsList, savedWatchList) {
                  <p class="plot">${movieData.Plot}</p>
              </div>
          </div>
-         <hr>
         `
         document.getElementById('main').innerHTML = innerHTML
     }

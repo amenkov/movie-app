@@ -57,11 +57,7 @@ async function renderMovies(savedWatchList) {
                  <p class="plot">${movieData.Plot}</p>
              </div>
          </div>
-         <hr>
         `
-        // if (document.getElementById('watchlist-placeholder')) {
-        //     document.getElementById('watchlist-placeholder').remove()
-        // }
         document.getElementById('main').innerHTML = innerHTML
     }
 
@@ -77,7 +73,6 @@ document.addEventListener('click', (e) => {
     localStorage.setItem(localStorageKey, JSON.stringify(savedWatchList))
 
     document.getElementById(imdbId).remove()
-    document.getElementsByTagName('hr')[0].remove()
     togglePlaceholder(savedWatchList)
 
 })
